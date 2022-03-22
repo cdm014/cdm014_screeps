@@ -1,4 +1,4 @@
-
+//#region Source.isSafe()
 // returns boolean on whether there's a hostile creep in range 5
 Source.prototype.isSafe = function() {
     return this.isSafe(5);
@@ -10,7 +10,8 @@ Source.prototype.isSafe = function (dist) {
         return true;
     }
 }
-
+//#endregion
+//#region Souce.getOpenSpaces()
 Source.prototype.getOpenSpaces = function() {
 //*
   if (!this._safeSpaces) {
@@ -33,6 +34,7 @@ Source.prototype.getOpenSpaces = function() {
  // */
   return this._safeSpaces;
 };
+//#endregion
 
 
 
@@ -244,7 +246,7 @@ Room.prototype.ScanRoomHealth = function () {
     }
   }
   //#endregion
-  
+
   //#region Resource Requests
   //set up room resource requests
   if (Memory.config.store != undefined) {
