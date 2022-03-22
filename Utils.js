@@ -209,6 +209,8 @@ Room.prototype.ScanRoomHealth = function () {
     Memory.rooms[roomName] = {};
   }
   let roomMemory = Memory.rooms[roomName];
+
+  //#region Structures
   if ( roomMemory.structures == undefined || roomMemory.structures.includes(", ") ){
     roomMemory.structures = []
   }
@@ -241,6 +243,9 @@ Room.prototype.ScanRoomHealth = function () {
       }
     }
   }
+  //#endregion
+  
+  //#region Resource Requests
   //set up room resource requests
   if (Memory.config.store != undefined) {
     console.log("Memory.config.Store: defined");
@@ -277,7 +282,9 @@ Room.prototype.ScanRoomHealth = function () {
     }
     
   }
+  //#endregion
 
+  //#region Sources
   let sources = this.find(FIND_ACTIVE_SOURCES, {filter: function(source) {return source.IsSafe();}});
   //report safe sources
   for (var index in sources) {
@@ -286,12 +293,14 @@ Room.prototype.ScanRoomHealth = function () {
       Game.Sources.push(source)
     }
   }
+  //#endregion
 
+  //#region  Controllers
   if(Game.Controllers[this.ControllerScore()] == null ) {
     Game.Controllers[this.ControllerScore() ]=[];
   }
   Game.Controllers[this.ControllerScore].push(this.controller)
-    
+  //#endregion 
 }
 
 ConstructionSite.prototype.Score = function(x,y) {
