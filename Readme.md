@@ -31,7 +31,7 @@ To have a codebase which can manage multiple rooms
     * build construction sites
     * repair buildings
 
-rooms
+# rooms
     - what priority is storing energy
         * storage
         * containers
@@ -46,7 +46,7 @@ rooms
 
 
 
-creep types
+# creep types
 - bootstrapper [work, carry, move, move]
     * purpose is to start the engine by giving the spawn a supply chain
     * also serve as cheap units to start a new room
@@ -67,3 +67,14 @@ creep types
     * used to reserve neutral controllers
 - miners
     * like workers except used especially by mining manager
+
+# next steps
+1. create bootstrapper creeps
+1. take requests from room and organize them
+1. start making creeps of the right type to service requests
+1. use created creeps to service requests
+
+# long term planning
+1. automatic construction sites
+1. create attackers (assigned a room)
+
