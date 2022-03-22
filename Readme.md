@@ -23,17 +23,47 @@ To have a codebase which can manage multiple rooms
 * creeps belong to the game system as a whole
 * fractalled design for scaling
 
-* i start off with one room and one spawn with full energy
-* evaluate needs of room 
-    * how close is the controller to downgrading
-    * does it have container/storage
-    * health scoring for structures
-        * sev 1 = Hits < 10 || hits < (totalHits/2^2)
-        * sev 2 = Hits < (totalHits/2^2)
-        * sev 3 = hits < (totalHits / 2 ^1)
-        * sev 4 = hits < (totalHits / 2^0)
-    * does it need more of a type of building
-        * room.BuildingScoreByType(STRUCTURE_TYPE CONSTANT) - checks both structures and building sites
-        
-    
+1. store energy in containers/storage
+2. upgrade controllers
+3. use energy
+    * give to spawns/extensions
+    * give to towers
+    * build construction sites
+    * repair buildings
 
+rooms
+    - what priority is storing energy
+        * storage
+        * containers
+    - what priority is transferring energy (from storage or from sources) 
+        * spawns
+        * extensions
+        * towers
+    - what priority is using energy (from storage or from sources)
+        * controllers
+        * construction sites
+        * repairing buildings
+
+
+
+creep types
+- bootstrapper [work, carry, move, move]
+    * purpose is to start the engine by giving the spawn a supply chain
+    * also serve as cheap units to start a new room
+    * always first creep created by engine
+    * tied to particular room
+    - picks from nearest source
+    - deposits to 
+        1. spawns
+        2. claimers
+        3. upgrades controller
+- workers [work, carry, move, move ] (repeating sections, depending on spawn capacity)
+    * general purpose worker
+    * used for most jobs except room claiming reserving
+- claimer [claim, up to 5 move sections]
+    * used to claim neutral controllers 
+    * used to attack enemy controllers
+- reserver [claim claim (1 - 5 carry sections) ((2 + carry) * 3 move sections)]
+    * used to reserve neutral controllers
+- miners
+    * like workers except used especially by mining manager
