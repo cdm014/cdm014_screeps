@@ -1,4 +1,5 @@
 class Empire {
+  //#region Empire Initialization
   static Init() {
    if (Memory.config == undefined) {
      Memory.config = {};
@@ -24,7 +25,22 @@ class Empire {
       Game.Controllers = [];
     }
   }
-  
+  //#endregion
+
+  //#region bootstrap
+  //bootstrapping our empire
+  static Bootstrap() {
+    //bootstrapping only matters if we only have one room and no creeps
+    //bootstrapping the empire includes spawning a bootstrapper for a room but is not quite the same thing
+    let rooms = _.keys(Game.rooms);
+    let screeps = _.keys(Game.creeps);
+    if (rooms.length == 1 && screeps.length == 0) {
+      let spawns = _.keys(Game.spawns);
+      let spawn = spawns[0];
+      spawn.spawnBootstrapper();
+    }
+  }
+  //#endregion
 
 
 

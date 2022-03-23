@@ -73,6 +73,8 @@ To have a codebase which can manage multiple rooms
 1. take requests from room and organize them
 1. start making creeps of the right type to service requests
 1. use created creeps to service requests
+1. I want to use generators to serve out creeps and maybe loop through tasks
+
 
 # long term planning
 1. automatic construction sites
