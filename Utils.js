@@ -62,30 +62,79 @@ Creep.prototype.countParts = function(partType) {
   return count;
 }
 
-//store whether the spawn thinks it's spawning
-StructureSpawn.prototype.isSpawning = false;
+StructureSpawn.prototype._isSpawning = false;
 
-StructureSpawn.prototype.acceptRequest = function (mycreepRequest) {
-  console.log("spawn.acceptRequest called");
-  console.log("request Module: "+mycreepRequest.module);
-  //update in case we had to re-add the flag
-  if(this.spawning != null) {
-    this.isSpawning = true;
+//we use isSpawning() so we can track whether we assigned it a CreeprEquest this tick
+StructureSpawn.prototype.isSpawning = function () {
+  if (this._isSpawning == undefined) {
+    this._isSpawning = (this.spawning != null)
   }
-  if (this.isSpawning) {
-    mycreepRequest.status = -1;
-    mycreepRequest.error_code = ERR_BUSY;
-  } else {
-    let results = this.spawnCreep(mycreepRequest.body,mycreepRequest.name,mycreepRequest.opts)
-    if (results == 0) {
-      mycreepRequest.status == 1;
-      this.isSpawning = true;
-    } else {
-      mycreepRequest.status = -1;
-    }
-    mycreepRequest.error_code = results;
+  var val = (this.spawning != null);
+  if (!val) {
+    val = this._isSpawning;
   }
-  return mycreepRequest;
+  return val;
+}
+
+StructureSpawn.prototype.isSpawning = function (value) {
+  this._isSpawning = value;
+  return value;
+}
+
+class RequestStatus {
+  constructor(name) {
+    this.Name = name;
+  }
+  static NONE = new RequestStatus("none");
+  static REQUESTED = new RequestStatus("requested");
+  static REJECTED = new RequestStatus("rejected");
+  static SPAWNING = new RequestStatus("spawning");
+}
+
+class CreepRole {
+  constructor(name) {
+    this.Name = Name;
+  }
+  static BOOTSTRAPPER = new CreepRole("bootstrapper");
+  static WORKER = new CreepRole("worker");
+  static CLAIMER1 = new CreepRole("claimer1");
+  static CLAIMER2 = new CreepRole("claimer2");
+}
+
+class CreepRequest {
+  constructor(BodyArray,Name,Options) {
+    this.Body = BodyArray;
+    this.Name = Name;
+    this.Options = Options ? Options : {};
+    this.RequestStatus = RequestStatus.NONE;
+  }
+}
+
+StructureSpawn.prototype.spawnRequest = function (request) {
+ if (this.isSpawning()){
+   //if we're busy let the request know we can't service it and return
+   request.RequestStatus = RequestStatus.REJECTED;
+   return request;
+ } else if (this.canHandleRequest(request) != OK ) {
+     request.RequestStatus = RequestStatus.REJECTED;
+     return request;
+ } else {
+   this.isSpawning(true); //we're spawning
+   this.spawnCreep(request.Body, request.Name, request.Options);
+ }
+}
+
+StructureSpawn.prototype.SpawnBootstrapper = function() {
+  var request = new CreepRequest([WORK, CARRY, MOVE, MOVE],"Harvester-"+Game.time,new {Memory:{role: CreepRole.BOOTSTRAPPER}});
+  return this.spawnRequest(request);
+}
+
+StructureSpawn.prototype.canHandleRequest= function(v_CreepRequest) {
+  if (this.isSpawning()) {
+    return false;
+  }
+  v_CreepRequest.Options.dryRun = true;
+  return this.spawnCreep(v_CreepRequest.Body, v_CreepRequest.Name, v_CreepRequest.Options)
 }
 StructureController.prototype.ticksToDowngradeTotal = [0,20000,10000,20000,40000,80000,120000,150000,200000];
 StructureController.prototype.ticksToDowngradePercent = function() {return this.ticksToDowngrade / this.ticksToDowngradeTotal[this.level];};
