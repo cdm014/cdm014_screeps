@@ -1,3 +1,6 @@
+var CreepRequests = require('CreepRequest');
+var RequestStatus = require('CreepRequestStatus');
+var CreepRole = require('CreepRole');
 //#region Source.isSafe()
 // returns boolean on whether there's a hostile creep in range 5
 Source.prototype.isSafe = function() {
@@ -64,78 +67,41 @@ Creep.prototype.countParts = function(partType) {
 
 StructureSpawn.prototype._isSpawning = false;
 
-//we use isSpawning() so we can track whether we assigned it a CreeprEquest this tick
 StructureSpawn.prototype.isSpawning = function () {
-  if (this._isSpawning == undefined) {
-    this._isSpawning = (this.spawning != null)
-  }
-  var val = (this.spawning != null);
-  if (!val) {
-    val = this._isSpawning;
-  }
-  return val;
-}
-
-StructureSpawn.prototype.isSpawning = function (value) {
-  this._isSpawning = value;
-  return value;
-}
-
-class RequestStatus {
-  constructor(name) {
-    this.Name = name;
-  }
-  static NONE = new RequestStatus("none");
-  static REQUESTED = new RequestStatus("requested");
-  static REJECTED = new RequestStatus("rejected");
-  static SPAWNING = new RequestStatus("spawning");
-}
-
-class CreepRole {
-  constructor(name) {
-    this.Name = Name;
-  }
-  static BOOTSTRAPPER = new CreepRole("bootstrapper");
-  static WORKER = new CreepRole("worker");
-  static CLAIMER1 = new CreepRole("claimer1");
-  static CLAIMER2 = new CreepRole("claimer2");
-}
-
-class CreepRequest {
-  constructor(BodyArray,Name,Options) {
-    this.Body = BodyArray;
-    this.Name = Name;
-    this.Options = Options ? Options : {};
-    this.RequestStatus = RequestStatus.NONE;
+  if (this.spawning == null)
+  {
+    return this._isSpawning;
+  } else {
+    return true;
   }
 }
 
-StructureSpawn.prototype.spawnRequest = function (request) {
- if (this.isSpawning()){
-   //if we're busy let the request know we can't service it and return
-   request.RequestStatus = RequestStatus.REJECTED;
-   return request;
- } else if (this.canHandleRequest(request) != OK ) {
-     request.RequestStatus = RequestStatus.REJECTED;
-     return request;
- } else {
-   this.isSpawning(true); //we're spawning
-   this.spawnCreep(request.Body, request.Name, request.Options);
- }
-}
-
-StructureSpawn.prototype.SpawnBootstrapper = function() {
-  var request = new CreepRequest([WORK, CARRY, MOVE, MOVE],"Harvester-"+Game.time,new {Memory:{role: CreepRole.BOOTSTRAPPER}});
-  return this.spawnRequest(request);
-}
-
-StructureSpawn.prototype.canHandleRequest= function(v_CreepRequest) {
-  if (this.isSpawning()) {
-    return false;
+StructureSpawn.prototype.SpawnRequest = function (v_request) {
+  if (this.isSpawning() ) {
+    v_request.RequestStatus = RequestStatus.REJECTED;
+  } else if (this.CanSpawnRequest(v_request) != 0) {
+    v_request.RequestStatus = RequestStatus.REJECTED;
+  } else {
+    this._isSpawning = true;
+    this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
+    v_request.RequestStatus = RequestStatus.SPAWNING;
   }
-  v_CreepRequest.Options.dryRun = true;
-  return this.spawnCreep(v_CreepRequest.Body, v_CreepRequest.Name, v_CreepRequest.Options)
+
+  return v_request;
 }
+
+StructureSpawn.prototype.CanSpawnRequest = function (v_request) {
+  v_request.Options.dryRun = true;
+  return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
+}
+
+StructureSpawn.prototype.SpawnBootstrapper = function () {
+  var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{Memory:{role:CreepRole.BOOTSTRAPPER}});
+  v_request = this.SpawnRequest(v_request);
+  return (v_request.RequestStatus = RequestStatus.SPAWNING);
+
+}
+
 StructureController.prototype.ticksToDowngradeTotal = [0,20000,10000,20000,40000,80000,120000,150000,200000];
 StructureController.prototype.ticksToDowngradePercent = function() {return this.ticksToDowngrade / this.ticksToDowngradeTotal[this.level];};
 StructureController.prototype.ControllerScore = function() {

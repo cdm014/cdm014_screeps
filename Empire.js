@@ -1,3 +1,8 @@
+
+var CreepRequests = require('CreepRequest');
+var CreepRole = require('CreepRole');
+var Utils = require('Utils');
+
 class Empire {
   //#region Empire Initialization
   static Init() {
@@ -37,7 +42,7 @@ class Empire {
     if (rooms.length == 1 && screeps.length == 0) {
       let spawns = _.keys(Game.spawns);
       let spawn = spawns[0];
-      spawn.spawnBootstrapper();
+      spawn.SpawnBootstrapper();
     }
   }
   //#endregion
