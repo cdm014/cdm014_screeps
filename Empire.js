@@ -1,7 +1,6 @@
-
 var CreepRequests = require('CreepRequest');
 var CreepRole = require('CreepRole');
-var Utils = require('Utils');
+
 
 class Empire {
   //#region Empire Initialization
@@ -31,7 +30,7 @@ class Empire {
     }
   }
   //#endregion
-
+ 
   //#region bootstrap
   //bootstrapping our empire
   static Bootstrap() {
@@ -42,7 +41,7 @@ class Empire {
     if (rooms.length == 1 && screeps.length == 0) {
       let spawns = _.keys(Game.spawns);
       let spawn = spawns[0];
-      spawn.SpawnBootstrapper();
+      spawn.SpawnBootstrapper("Empire Bootstrap");
     }
   }
   //#endregion

@@ -95,11 +95,16 @@ StructureSpawn.prototype.CanSpawnRequest = function (v_request) {
   return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
 }
 
-StructureSpawn.prototype.SpawnBootstrapper = function () {
+StructureSpawn.prototype._SpawnBootstrapper = function () {
   var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{Memory:{role:CreepRole.BOOTSTRAPPER}});
   v_request = this.SpawnRequest(v_request);
   return (v_request.RequestStatus = RequestStatus.SPAWNING);
 
+}
+
+StructureSpawn.prototype.SpawnBootstrapper = function ( calledFrom) {
+  console.log("spawnBootstrapper called from: " + calledFrom);
+  return this._SpawnBootstrapper();
 }
 
 StructureController.prototype.ticksToDowngradeTotal = [0,20000,10000,20000,40000,80000,120000,150000,200000];

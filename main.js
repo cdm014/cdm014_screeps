@@ -1,11 +1,13 @@
 var Tasks = require('creep-tasks');
 var Traveler = require('Traveler');
-var Utils = require('Utils');
+require('Utils');
 var Empire = require('Empire');
 //var CreepRequest = require('CreepRequest');
 
 
 module.exports.loop = function () {
+  let spawn = Game.spawns['Spawn1'];
+  spawn.SpawnBootstrapper("main loop");
  Empire.Init();
  Empire.Bootstrap();
  for (var roomName in Game.rooms) {
@@ -13,6 +15,7 @@ module.exports.loop = function () {
    //room.ScanRoomHealth();
   
    //console.log(roomName+" - "+STRUCTURE_SPAWN+" : "+room.BuildingScoreByType(STRUCTURE_SPAWN));
+
  }
 
 
