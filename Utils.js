@@ -77,13 +77,20 @@ StructureSpawn.prototype.isSpawning = function () {
 }
 
 StructureSpawn.prototype.SpawnRequest = function (v_request) {
+  console.log("*** request ***");
+  console.log("Name: "+v_request.Name);
+  console.log("Body: "+v_request.Body);
+
   if (this.isSpawning() ) {
+    console.log("Already spawning");
     v_request.RequestStatus = RequestStatus.REJECTED;
   } else if (this.CanSpawnRequest(v_request) != 0) {
+    console.log("Cannot spawn request");
     v_request.RequestStatus = RequestStatus.REJECTED;
   } else {
+    console.log("trying to spawn");
     this._isSpawning = true;
-    this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
+    console.log ("spawn attempt: "+this.spawnCreep(v_request.Body, v_request.Name, v_request.Options));
     v_request.RequestStatus = RequestStatus.SPAWNING;
   }
 
@@ -91,14 +98,16 @@ StructureSpawn.prototype.SpawnRequest = function (v_request) {
 }
 
 StructureSpawn.prototype.CanSpawnRequest = function (v_request) {
+  console.log("CanSpawnRequest called");
   v_request.Options.dryRun = true;
   return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
 }
 
 StructureSpawn.prototype._SpawnBootstrapper = function () {
+  console.log("_SpawnBootstrapper called");
   var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{Memory:{role:CreepRole.BOOTSTRAPPER}});
   v_request = this.SpawnRequest(v_request);
-  return (v_request.RequestStatus = RequestStatus.SPAWNING);
+  return (v_request.RequestStatus == RequestStatus.SPAWNING);
 
 }
 

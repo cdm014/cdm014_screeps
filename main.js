@@ -8,8 +8,9 @@ var Empire = require('Empire');
 module.exports.loop = function () {
   let spawn = Game.spawns['Spawn1'];
   spawn.SpawnBootstrapper("main loop");
- Empire.Init();
- Empire.Bootstrap();
+  var v_Empire = new  Empire();
+ v_Empire.Init();
+ v_Empire.Bootstrap();
  for (var roomName in Game.rooms) {
    let room = Game.rooms[roomName];
    //room.ScanRoomHealth();

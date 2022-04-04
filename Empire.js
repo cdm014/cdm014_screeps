@@ -3,8 +3,13 @@ var CreepRole = require('CreepRole');
 
 
 class Empire {
+
+  constructor () {
+    this.name = "Empire";
+
+  }
   //#region Empire Initialization
-  static Init() {
+  Init() {
    if (Memory.config == undefined) {
      Memory.config = {};
    }
@@ -28,20 +33,22 @@ class Empire {
     if (Game.Controllers == undefined) {
       Game.Controllers = [];
     }
-  }
+  };
   //#endregion
  
   //#region bootstrap
   //bootstrapping our empire
-  static Bootstrap() {
+  Bootstrap() {
     //bootstrapping only matters if we only have one room and no creeps
     //bootstrapping the empire includes spawning a bootstrapper for a room but is not quite the same thing
     let rooms = _.keys(Game.rooms);
     let screeps = _.keys(Game.creeps);
     if (rooms.length == 1 && screeps.length == 0) {
       let spawns = _.keys(Game.spawns);
-      let spawn = spawns[0];
-      spawn.SpawnBootstrapper("Empire Bootstrap");
+      let spawnName = spawns[0];
+      let spawn = Game.spawns[spawnName];
+      console.log ("bootstrapper: "+spawn.SpawnBootstrapper("Empire Bootstrap()")); 
+      
     }
   }
   //#endregion
