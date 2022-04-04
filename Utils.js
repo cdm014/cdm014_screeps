@@ -65,49 +65,17 @@ Creep.prototype.countParts = function(partType) {
   return count;
 }
 
-StructureSpawn.prototype._isSpawning = false;
 
-StructureSpawn.prototype.isSpawning = function () {
-  if (this.spawning == null)
-  {
-    return this._isSpawning;
-  } else {
-    return true;
-  }
-}
-
-StructureSpawn.prototype.SpawnRequest = function (v_request) {
-  console.log("*** request ***");
-  console.log("Name: "+v_request.Name);
-  console.log("Body: "+v_request.Body);
-
-  if (this.isSpawning() ) {
-    console.log("Already spawning");
-    v_request.RequestStatus = RequestStatus.REJECTED;
-  } else if (this.CanSpawnRequest(v_request) != 0) {
-    console.log("Cannot spawn request");
-    v_request.RequestStatus = RequestStatus.REJECTED;
-  } else {
-    console.log("trying to spawn");
-    this._isSpawning = true;
-    console.log ("spawn attempt: "+this.spawnCreep(v_request.Body, v_request.Name, v_request.Options));
-    v_request.RequestStatus = RequestStatus.SPAWNING;
-  }
-
-  return v_request;
-}
-
-StructureSpawn.prototype.CanSpawnRequest = function (v_request) {
-  console.log("CanSpawnRequest called");
-  v_request.Options.dryRun = true;
-  return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
+StructureSpawn.prototype.SpawnRequest = function(v_request) { 
+  return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options)
 }
 
 StructureSpawn.prototype._SpawnBootstrapper = function () {
   console.log("_SpawnBootstrapper called");
-  var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{Memory:{role:CreepRole.BOOTSTRAPPER}});
-  v_request = this.SpawnRequest(v_request);
-  return (v_request.RequestStatus == RequestStatus.SPAWNING);
+  var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{
+    memory: {role: CreepRole.BOOTSTRAPPER}
+});
+  console.log("spawning result: "+ this.SpawnRequest(v_request))
 
 }
 
