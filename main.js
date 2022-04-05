@@ -1,5 +1,7 @@
-var Tasks = require('creep-tasks');
+let Tasks = require('creep-tasks');
+let Bootstrapper = require('roleBootstrapper');
 var Traveler = require('Traveler');
+let Role = require('CreepRole');
 require('Utils');
 var Empire = require('Empire');
 //var CreepRequest = require('CreepRequest');
@@ -7,17 +9,31 @@ var Empire = require('Empire');
 
 module.exports.loop = function () {
   let spawn = Game.spawns['Spawn1'];
-  spawn.SpawnBootstrapper("main loop");
+  //spawn.SpawnBootstrapper("main loop");
   var v_Empire = new  Empire();
  v_Empire.Init();
  v_Empire.Bootstrap();
  for (var roomName in Game.rooms) {
    let room = Game.rooms[roomName];
-   //room.ScanRoomHealth();
+   room.ScanRoomHealth();
   
    //console.log(roomName+" - "+STRUCTURE_SPAWN+" : "+room.BuildingScoreByType(STRUCTURE_SPAWN));
 
  }
+
+ for (var cname in Game.creeps) {
+   let creep = Game.creeps[cname];
+   console.log("Creep Name: "+cname);
+   if (creep.memory.role == Role.BOOTSTRAPPER) {
+     console.log( cname + " is bootstrapper");
+     if (creep.isIdle) {
+       console.log("setting bootstrapper task");
+       Bootstrapper(creep);
+     }
+   }
+   creep.run();
+ }
+
 
 
 

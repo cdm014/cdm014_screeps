@@ -47,7 +47,7 @@ class Empire {
       let spawns = _.keys(Game.spawns);
       let spawnName = spawns[0];
       let spawn = Game.spawns[spawnName];
-      console.log ("bootstrapper: "+spawn.SpawnBootstrapper("Empire Bootstrap()")); 
+      console.log ("bootstrapper: "+spawn.SpawnBootstrapper(spawn.room.name)); 
       
     }
   }

@@ -7,7 +7,7 @@ Source.prototype.isSafe = function() {
     return this.isSafe(5);
 };
 Source.prototype.isSafe = function (dist) {
-    if (this.pos.findInRange(FIND_HOSTILE_CREEPS, DIST).length > 0) {
+    if (this.pos.findInRange(FIND_HOSTILE_CREEPS, dist).length > 0) {
         return false;
     } else {
         return true;
@@ -66,22 +66,40 @@ Creep.prototype.countParts = function(partType) {
 }
 
 
+
 StructureSpawn.prototype.SpawnRequest = function(v_request) { 
-  return this.spawnCreep(v_request.Body, v_request.Name, v_request.Options)
+  if(this.isSpawning() != false) {
+    return ERR_BUSY;
+  }
+  var spawnResult = this.spawnCreep(v_request.Body, v_request.Name, v_request.Options);
+  if (spawnResult == OK) {
+    this._isSpawning = true;
+  }
+  return spawnResult;
 }
 
-StructureSpawn.prototype._SpawnBootstrapper = function () {
+
+
+StructureSpawn.prototype.SpawnBootstrapper = function ( roomName) {
   console.log("_SpawnBootstrapper called");
   var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{
-    memory: {role: CreepRole.BOOTSTRAPPER}
+    memory: {role: CreepRole.BOOTSTRAPPER, "roomName": roomName}
 });
   console.log("spawning result: "+ this.SpawnRequest(v_request))
 
 }
 
-StructureSpawn.prototype.SpawnBootstrapper = function ( calledFrom) {
-  console.log("spawnBootstrapper called from: " + calledFrom);
-  return this._SpawnBootstrapper();
+
+
+StructureSpawn.prototype.isSpawning = function() {
+  if (this._isSpawning == undefined) {
+    this._isSpawning = false;
+  }
+  if (this.spawning == null) {
+    return this._isSpawning;
+  } else {
+    return true;
+  }
 }
 
 StructureController.prototype.ticksToDowngradeTotal = [0,20000,10000,20000,40000,80000,120000,150000,200000];
@@ -284,7 +302,7 @@ Room.prototype.ScanRoomHealth = function () {
   //#endregion
 
   //#region Sources
-  let sources = this.find(FIND_ACTIVE_SOURCES, {filter: function(source) {return source.IsSafe();}});
+  let sources = this.find(FIND_SOURCES_ACTIVE, {filter: function(source) {return source.isSafe();}});
   //report safe sources
   for (var index in sources) {
     let source = sources[index];
@@ -293,12 +311,14 @@ Room.prototype.ScanRoomHealth = function () {
     }
   }
   //#endregion
-
+ 
+  console.log( "Controller score: "+this.ControllerScore());
   //#region  Controllers
   if(Game.Controllers[this.ControllerScore()] == null ) {
+    console.log("score not found creating list");
     Game.Controllers[this.ControllerScore() ]=[];
   }
-  Game.Controllers[this.ControllerScore].push(this.controller)
+  Game.Controllers[this.ControllerScore()].push(this.controller)
   //#endregion 
 }
 
