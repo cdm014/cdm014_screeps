@@ -2,6 +2,7 @@ let Tasks = require('creep-tasks');
 let Bootstrapper = require('roleBootstrapper');
 var Traveler = require('Traveler');
 let Role = require('CreepRole');
+let ProcessTable = require('ProcessTable');
 require('Utils');
 var Empire = require('Empire');
 //var CreepRequest = require('CreepRequest');
