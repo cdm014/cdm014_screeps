@@ -90,7 +90,7 @@ class ProcessTable {
             let ProcessesToFix = _.takeWhile(this.processes, function(p) {
                 return (p.priority == undefined);
             });
-            _.foreach(ProcessesToFix,function(p){
+            _.forEach(ProcessesToFix,function(p){
                 p.priority = 5;
             });
         } 
