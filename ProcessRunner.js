@@ -8,10 +8,16 @@ class ProcessRunner {
     }
     Run(vProcess) {
         console.log("ProcessRunner called for pId: "+vProcess.Id+" name: "+vProcess.processName);
-        let runner = null;
+        let runner = require('process-TEST'); // USE DEFAULT PROCESS THAT JUST LOGS THE ID 
         switch (vProcess.processName) {
             case ProcessNames.TEST:
                 runner = require('process-TEST');
+                break;
+            case ProcessNames.INIT:
+                runner = require('process-INIT');
+                break;
+            case ProcessNames.BOOTSTRAP:
+                runner = require('process-BOOTSTRAP');
                 break;
         }
         let p = new runner();
