@@ -58,6 +58,8 @@ class ProcessTable {
         if (v_Process.Id == undefined  || 
             v_Process.processName == undefined) {
             console.log("not adding process because undefined");
+            console.log("Process ID: "+v_Process.Id);
+            console.log("Process Name: "+v_Process.processName);
             return null;
         }
         //if the process id doesn't already exist or this process is the same 
