@@ -43,11 +43,14 @@ module.exports.loop = function () {
  */
 
  // SCAN ROOMS FOR HEALTH. WILL LATER MAKE THIS IT'S OWN PROCESS
+ // CANNOT RUN THIS BEFORE INIT CODE RUNS
+ /*
  for (var roomName in Game.rooms) {
    let room = Game.rooms[roomName];
    room.ScanRoomHealth();
   //console.log(roomName+" - "+STRUCTURE_SPAWN+" : "+room.BuildingScoreByType(STRUCTURE_SPAWN));
  }
+ */
 
  //loop through priorities running processes
  for (let i = 0; i <= 5; i++) {
