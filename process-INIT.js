@@ -12,9 +12,7 @@ class ProcessInit {
           if (Memory.config.roomBalance == undefined) {
            Memory.config.roomBalance = 4; //an energy source must have 4 creeps targeting before it's worth a different room
           }
-       
-          
-       
+
           //set initial structure storage percent goals
           //I expect to have the scripts change this dynamically over time
           if (Memory.config.store == undefined) {
