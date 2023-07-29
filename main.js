@@ -4,7 +4,7 @@ var Traveler = require('Traveler');
 let Role = require('CreepRole');
 let _ProcessTable = require('ProcessTable');
 let Process = require('ProcessEntry');
-//let ProcessNames = require('ProcessNames');
+let ProcessNames = require('ProcessNames');
 require('Utils');
 var Empire = require('Empire');
 //var CreepRequest = require('CreepRequest');
@@ -16,7 +16,7 @@ module.exports.loop = function () {
   var ProcessTable = new _ProcessTable()
   //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
   let Bootstrap = new Process(0, 0, null, "_process_BOOTSTRAP")
-  //ProcessTable.addProcess(Bootstrap);
+  ProcessTable.addProcess(Bootstrap);
 
   var v_Empire = new  Empire();
   console.log("Next Process ID: "+ProcessTable.getNextId())
