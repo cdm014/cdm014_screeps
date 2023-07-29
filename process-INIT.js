@@ -6,16 +6,31 @@ class ProcessInit {
     }
     Run(pId) {
         console.log("Called "+this.Name+".Run with process id : "+pId);
-        /*
-        let rooms = _.keys(Game.rooms);
-        let screeps = _.keys(Game.creeps);
-        if (rooms.length == 1 && screeps.length == 0) {
-            let spawns = _.keys(Game.spawns);
-            let spawnName = spawns[0];
-            let spawn = Game.spawns[spawnName];
-            console.log ("bootstrapper: "+spawn.SpawnBootstrapper(spawn.room.name)); 
-        }
-        */
+        if (Memory.config == undefined) {
+            Memory.config = {};
+          }
+          if (Memory.config.roomBalance == undefined) {
+           Memory.config.roomBalance = 4; //an energy source must have 4 creeps targeting before it's worth a different room
+          }
+       
+          
+       
+          //set initial structure storage percent goals
+          //I expect to have the scripts change this dynamically over time
+          if (Memory.config.store == undefined) {
+            Memory.config.store = {};
+            Memory.config.store[RESOURCE_ENERGY] = 100;
+          }
+       
+           if (Memory.rooms == undefined) {
+             Memory.rooms = {};
+           }
+           if (Game.Sources == undefined) {
+             Game.Sources = [];
+           }
+           if (Game.Controllers == undefined) {
+             Game.Controllers = [];
+           }
     }
 
 }
