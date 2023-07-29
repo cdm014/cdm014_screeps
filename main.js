@@ -3,6 +3,8 @@ let Bootstrapper = require('roleBootstrapper');
 var Traveler = require('Traveler');
 let Role = require('CreepRole');
 let _ProcessTable = require('ProcessTable');
+let Process = require('ProcessEntry');
+let ProcessNames = require('ProcessNames');
 require('Utils');
 var Empire = require('Empire');
 //var CreepRequest = require('CreepRequest');
@@ -12,8 +14,12 @@ module.exports.loop = function () {
   let spawn = Game.spawns['Spawn1'];
   //spawn.SpawnBootstrapper("main loop");
   var ProcessTable = new _ProcessTable()
+  //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
+  let Bootstrap = new Process(0, 0, null, ProcessNames.BOOTSTRAP)
+  ProcessTable.addProcess(Bootstrap);
+
   var v_Empire = new  Empire();
-  console.log(ProcessTable.getNextId())
+  console.log("Next Process ID: "+ProcessTable.getNextId())
   
  v_Empire.Init();
  v_Empire.Bootstrap();
