@@ -21,10 +21,39 @@ To have a codebase which can manage multiple rooms
 
 # notes
 - i'm going with an os/process based code base
-
+## basic process table structure
 |type   | name            |
 |------ |---------------- |
-|int    | processMemoryId |
-|string | ProcessName     |
-|int    | parent processID|
-|array  | child processIDs|
+|int    | processMemoryId   |
+|int    | priority          |
+|enum   | status - active, waiting on signal, finished|
+|int    | parent processMemoryId|
+|string | processName|
+
+## basic process code structure
+| type | name/signature | description|
+|---|---|---|
+|function | Run (processMemoryId) | runs the code for the process with the memory in that process memory slot It should check for signals sent within this function. This code should execute the smallest number of changes possible and may be called multiple times per tick if cpu permits|
+
+
+## basic signal structure 
+|type | name |
+|---|---|
+|int    | ID    |
+|int    | priority |
+|int    | senderId |
+|int    | recipientId |
+|json   | message   |
+
+
+
+
+# Current Status
+## Bootstrapping
+Currently the only functionality is the Empire.Bootstrap function which will create a single 
+Bootstrapper creep if the empire is only a single room and has no creeps. The bootstrapper creep
+fills the first spawn in the room it is assigned to, then switches over to upgrading the controller.
+
+# plans
+## Processes
+###
