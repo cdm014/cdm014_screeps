@@ -1,4 +1,4 @@
-let ProcessStatus = require(' ProcessStatus');
+let ProcessStatus = require('ProcessStatus');
 class ProcessTable {
     constructor() {
         if (Memory.ProcessTable == undefined) {
@@ -45,7 +45,7 @@ class ProcessTable {
         }
         
     }
-    
+
     getNextId() {
         let returnedId = this.ids.next();
         if (!returnedId.done) {
