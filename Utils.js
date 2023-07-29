@@ -1,7 +1,8 @@
 var CreepRequests = require('CreepRequest');
 var RequestStatus = require('CreepRequestStatus');
 var CreepRole = require('CreepRole');
-//#region Source.isSafe()
+
+// #region Source
 // returns boolean on whether there's a hostile creep in range 5
 Source.prototype.isSafe = function() {
     return this.isSafe(5);
@@ -13,8 +14,7 @@ Source.prototype.isSafe = function (dist) {
         return true;
     }
 }
-//#endregion
-//#region Souce.getOpenSpaces()
+
 Source.prototype.getOpenSpaces = function() {
 //*
   if (!this._safeSpaces) {
@@ -37,8 +37,6 @@ Source.prototype.getOpenSpaces = function() {
  // */
   return this._safeSpaces;
 };
-//#endregion
-
 
 
 Source.prototype.ScoreRoomObject = function (targetObject) {
@@ -53,6 +51,7 @@ Source.prototype.ScoreRoomPos = function (targetPos) {
   }
   score += (this.targetedBy.length / this.getOpenSpaces());
 }
+// #endregion
 
 Creep.prototype.countParts = function(partType) {
   let count = 0;
@@ -65,8 +64,7 @@ Creep.prototype.countParts = function(partType) {
   return count;
 }
 
-
-
+// #region Spawn
 StructureSpawn.prototype.SpawnRequest = function(v_request) { 
   ///<Summary>
   ///Accepts a CreepRequest Object and attempts to spawn it if this spawn is available
@@ -81,7 +79,6 @@ StructureSpawn.prototype.SpawnRequest = function(v_request) {
   }
   return spawnResult;
 }
-
 
 StructureSpawn.prototype.SpawnBootstrapper = function ( roomName) {
   ///<Summary>
@@ -99,8 +96,6 @@ StructureSpawn.prototype.SpawnBootstrapper = function ( roomName) {
 
 }
 
-
-
 StructureSpawn.prototype.isSpawning = function() {
   if (this._isSpawning == undefined) {
     this._isSpawning = false;
@@ -111,7 +106,9 @@ StructureSpawn.prototype.isSpawning = function() {
     return true;
   }
 }
+// #endregion
 
+// #region Controller
 StructureController.prototype.ticksToDowngradeTotal = [0,20000,10000,20000,40000,80000,120000,150000,200000];
 StructureController.prototype.ticksToDowngradePercent = function() {return this.ticksToDowngrade / this.ticksToDowngradeTotal[this.level];};
 StructureController.prototype.ControllerScore = function() {
@@ -129,22 +126,9 @@ StructureController.prototype.ControllerScore = function() {
   return score;
 
 }
-Structure.prototype.HealthScore = function() {
-  var score = 5;
-  if (this.hits <= 10 || this.hits <= (this.hitsMax/16)) {
-    score = 1; //do something about this ASAP
-  } else if (this.hits <= (this.hitsMax/8)) {
-    score = 2;
-  } else if (this.hits <= (this.hitsMax/4) ) {
-    score = 3;
-  } else if (this.hits <= (this.hitsMax / 2)) {
-    score = 4;
-  }
+// #endregion
 
-  if (this.my != null && this.my == false) {score = -1}
-  return score;
-}
-
+// #region Room
 Room.prototype.DistanceTo = function (rname,continuous = false) {
   if (this.name == rname) {
     return 0;
@@ -195,8 +179,6 @@ Room.prototype.BuildingTypesToCheck = [
   STRUCTURE_SPAWN,
   STRUCTURE_TOWER
 ];
-
-
 
 Room.prototype.Score = function(x,y) {
   let score = 5;
@@ -331,7 +313,9 @@ Room.prototype.ScanRoomHealth = function () {
   Game.Controllers[this.ControllerScore()].push(this.controller)
   //#endregion 
 }
+// #endregion
 
+// #region ConstructionSite
 ConstructionSite.prototype.Score = function(x,y) {
   let score = 5;
   if (x <= y / 16) {
@@ -354,7 +338,24 @@ ConstructionSite.prototype.ProgressScore = function () {
     return -1;
   }
 }
+// #endregion
 
+// #region Structure
+Structure.prototype.HealthScore = function() {
+  var score = 5;
+  if (this.hits <= 10 || this.hits <= (this.hitsMax/16)) {
+    score = 1; //do something about this ASAP
+  } else if (this.hits <= (this.hitsMax/8)) {
+    score = 2;
+  } else if (this.hits <= (this.hitsMax/4) ) {
+    score = 3;
+  } else if (this.hits <= (this.hitsMax / 2)) {
+    score = 4;
+  }
+
+  if (this.my != null && this.my == false) {score = -1}
+  return score;
+}
 
 Structure.prototype.ResourceScore = function (RESOURCE_TYPE) {
   let keys = _.keys(Memory.config.store) ;
@@ -387,3 +388,4 @@ Structure.prototype.Score = function(x,y) {
   }
   return score;
 }
+// #endregion
