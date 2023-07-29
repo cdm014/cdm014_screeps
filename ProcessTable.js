@@ -34,7 +34,7 @@ class ProcessTable {
         ///have a status of ProcessStatus.KILLED
         ///</Summary>
         console.log("Checking id: "+v_id);
-        console.log("processes: "+_keys(this.processes));
+        console.log("processes: "+_.keys(this.processes));
         if (_.contains(_.keys(this.processes),v_id)) {
             console.log("ID exists in table");
             //check if the process has been killed
