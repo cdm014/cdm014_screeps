@@ -4,6 +4,7 @@ var Traveler = require('Traveler');
 let Role = require('CreepRole');
 let _ProcessTable = require('ProcessTable');
 let Process = require('ProcessEntry');
+var ProcessRunner = require('ProcessRunner');
 const ProcessStatus = require('ProcessStatus');
 const ProcessNames = require('ProcessNames');
 require('Utils');
@@ -21,6 +22,7 @@ module.exports.loop = function () {
   ProcessTable.addProcess(Bootstrap);
   console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
   let TestProcess = new Process(1,0,ProcessStatus.INITIALIZING,null,ProcessNames.TEST)
+  let runner = new ProcessRunner();
   ProcessTable.addProcess(TestProcess);
 
   var v_Empire = new  Empire();
