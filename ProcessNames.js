@@ -1,7 +1,8 @@
-const ProcessNames = {
-    BOOTSTRAP : "_process_BOOTSTRAP", //CRITICAL PROCESS 
-    TEST: "_process_TEST", //PLACEHOLDER PROCESS TO TEST PROCESS TABLE
+//PROVIDES KNOWN PROCESS NAMES AND THE FILES THEY MAP TO
 
+const ProcessNames = {
+    BOOTSTRAP : "process_BOOTSTRAP", //CRITICAL PROCESS 
+    TEST: "process_TEST", //PLACEHOLDER PROCESS TO TEST PROCESS TABLE
 }
 module.exports = ProcessNames
 
