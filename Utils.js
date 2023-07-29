@@ -68,6 +68,10 @@ Creep.prototype.countParts = function(partType) {
 
 
 StructureSpawn.prototype.SpawnRequest = function(v_request) { 
+  ///<Summary>
+  ///Accepts a CreepRequest Object and attempts to spawn it if this spawn is available
+  ///</Summary>
+  ///<param name="v_request">An object containing a Body, Name, and Options property</param>
   if(this.isSpawning() != false) {
     return ERR_BUSY;
   }
@@ -79,8 +83,14 @@ StructureSpawn.prototype.SpawnRequest = function(v_request) {
 }
 
 
-
 StructureSpawn.prototype.SpawnBootstrapper = function ( roomName) {
+  ///<Summary>
+  ///Accepts a room name and uses that to create a CreepRequest
+  ///for a creep that has the roll of bootstrapper and is 
+  ///assigned to that room.
+  ///Then passes the request immediately to StructureSpawn.SpawnRequest
+  ///</Summary>
+  ///<param name="roomName">Name of the room the bootstrapper will be assigned to</param>
   console.log("_SpawnBootstrapper called");
   var v_request = CreepRequests.NewRequest([WORK,CARRY,MOVE,MOVE], "Bootstrapper-"+Game.time,{
     memory: {role: CreepRole.BOOTSTRAPPER, "roomName": roomName}
