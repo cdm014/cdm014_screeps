@@ -11,7 +11,7 @@ class ProcessRunner {
         let runner = null;
         switch (vProcess.processName) {
             case ProcessNames.TEST:
-                runner = require(vProcess.processName);
+                runner = require('process-TEST');
                 break;
         }
         let p = new runner();
