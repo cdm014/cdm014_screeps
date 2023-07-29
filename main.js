@@ -16,6 +16,7 @@ module.exports.loop = function () {
   //spawn.SpawnBootstrapper("main loop");
   var ProcessTable = new _ProcessTable()
   //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
+  console.log ("ProcessStatus.RUNNING: "+ProcessStatus.RUNNING)
   let Bootstrap = new Process(0, 0,ProcessStatus.RUNNING, null, ProcessNames.BOOTSTRAP)
   ProcessTable.addProcess(Bootstrap);
   console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
