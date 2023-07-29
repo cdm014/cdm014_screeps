@@ -218,11 +218,13 @@ Room.prototype.ScanRoomHealth = function () {
     Memory.rooms[roomName] = {};
   }
   let roomMemory = Memory.rooms[roomName];
-
+  // Prioritize structures by their health score
   //#region Structures
   if ( roomMemory.structures == undefined || roomMemory.structures.includes(", ") ){
     roomMemory.structures = []
   }
+
+ 
   for (var index in structures) {
     let structure = structures[index];
     let healthScore = structure.HealthScore();
@@ -285,6 +287,7 @@ Room.prototype.ScanRoomHealth = function () {
         if (DepositList[score] == undefined) {
           DepositList[score] = [];
         }
+        console.log ("Scoring object id: "+structure.id)
         DepositList[score].push(structure.id);
       }
 
@@ -388,4 +391,6 @@ Structure.prototype.Score = function(x,y) {
   }
   return score;
 }
+
+
 // #endregion
