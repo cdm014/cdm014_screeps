@@ -2,7 +2,7 @@
 
 const ProcessNames = {
     BOOTSTRAP : "process_BOOTSTRAP", //CRITICAL PROCESS 
-    TEST: "process_TEST", //PLACEHOLDER PROCESS TO TEST PROCESS TABLE
+    TEST: "process-TEST", //PLACEHOLDER PROCESS TO TEST PROCESS TABLE
 }
 module.exports = ProcessNames
 
