@@ -1,5 +1,5 @@
 let Process = require('ProcessEntry');
-let ProcessName = require('ProcessNames');
+let ProcessNames = require('ProcessNames');
 let ProcessStatus = require('ProcessStatus');
 
 class ProcessRunner {
@@ -8,7 +8,12 @@ class ProcessRunner {
     }
     Run(vProcess) {
         console.log("ProcessRunner called for pId: "+vProcess.Id+" name: "+vProcess.processName);
-        let runner = require(vProcess.processName)
+        let runner = null;
+        switch (vProcess.processName) {
+            case ProcessNames.TEST:
+                runner = require('process_TEST');
+                break;
+        }
         let p = new runner();
         p.Run(vProcess.Id);
     }
