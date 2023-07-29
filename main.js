@@ -62,7 +62,7 @@ module.exports.loop = function () {
  }
 
 
-
+/*
  // RUN BOOTSTRAP CREEPS, WILL LATER START MOVING THIS INTO THE BOOTSTRAP THREAD
  for (var cname in Game.creeps) {
    let creep = Game.creeps[cname];
@@ -78,7 +78,7 @@ module.exports.loop = function () {
    creep.run();
  }
 
-
+*/
 
 
   
