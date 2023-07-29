@@ -34,6 +34,7 @@ To have a codebase which can manage multiple rooms
 | type | name/signature | description|
 |---|---|---|
 |function | Run (processMemoryId) | runs the code for the process with the memory in that process memory slot It should check for signals sent within this function. This code should execute the smallest number of changes possible and may be called multiple times per tick if cpu permits|
+|function | Init (processMemoryId) | basic setup for the process including setting up any necessary memory configuration|
 
 
 ## basic signal structure 

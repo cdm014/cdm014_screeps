@@ -3,17 +3,17 @@
 
 class ProcessEntry {
     //class to hold process records
-    ProcessMemoryId;
+    Id;
     priority;
     status;
-    parentProcessMemoryId;
+    parentId;
     processName;
     constructor(pID, pri, stat, parentId, pName) {
        this.name = "ProcessEntry";
-       this.ProcessMemoryId = pID;
+       this.Id = pID;
        this.priority = pri;
        this.status = stat,
-       this.parentProcessMemoryId = parentId
+       this.parentId = parentId
        this.processName = pName;
 
     }

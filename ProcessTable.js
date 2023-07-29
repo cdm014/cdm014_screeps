@@ -1,3 +1,4 @@
+let ProcessStatus = require(' ProcessStatus');
 class ProcessTable {
     constructor() {
         if (Memory.ProcessTable == undefined) {
@@ -13,18 +14,38 @@ class ProcessTable {
         this.LastFix = Memory.ProcessTable.LastFix;
         this.ids = this._getNextId();
     }
+
     * _getNextId() {
+        ///<Summary>
+        ///goes through id's finding the next id that's available
+        ///</Summary>
         let id = 0;
         while(true) {
-            if (!this.checkIdExists(id)) {
+            if (!this.checkIdExists(id) ) {
                 yield id;
             }
             id++;
         }
     }
+
     checkIdExists(v_id) {
-        return (_.contains(_.keys(this.processes),v_id));
+        ///<Summary>
+        ///checks if an id is in the table returns true if it's in the table and doesn't
+        ///have a status of ProcessStatus.KILLED
+        ///</Summary>
+        if (_.contains(_.keys(this.processes),v_id)) {
+            //check if the process has been killed
+            if (this.getProcess(v_id).status == ProcessStatus.KILLED) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        
     }
+    
     getNextId() {
         let returnedId = this.ids.next();
         if (!returnedId.done) {
@@ -38,7 +59,8 @@ class ProcessTable {
             v_Process.processName == undefined) {
             return null;
         }
-        if(!this.checkIdExists(v_Process.Id)) {
+        //if the process id doesn't already exist or this process is the same 
+        if(!this.checkIdExists(v_Process.Id) || (this.checkIdExists(v_Process.Id) && v_Process.processName == this.getProcess(v_Process.Id).processName) ) {
             this.processes[v_Process.id] = v_Process;
         }
     }
