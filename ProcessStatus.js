@@ -6,3 +6,5 @@ const ProcessStatus = {
     WAITING_ON_TICK: 3,  //FOR WHEN THE PROCESS IS WAITING ON THE GAME TO ADVANCE TO THE NEXT TICK
 
 }
+
+module.exports = ProcessStatus;
