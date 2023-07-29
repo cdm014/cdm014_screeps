@@ -16,7 +16,7 @@ module.exports.loop = function () {
   var ProcessTable = new _ProcessTable()
   //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
   let Bootstrap = new Process(0, 0, null, "_process_BOOTSTRAP")
-  ProcessTable.addProcess(Bootstrap);
+  //ProcessTable.addProcess(Bootstrap);
 
   var v_Empire = new  Empire();
   console.log("Next Process ID: "+ProcessTable.getNextId())
