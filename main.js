@@ -27,6 +27,7 @@ module.exports.loop = function () {
   console.log("Next Process ID: "+ProcessTable.getNextId())
   let criticals = ProcessTable.getProcessesByPriority(0);
   criticals.forEach(element => {
+    console.log("Logging "+element.Id);
     element.log();
     
   });
