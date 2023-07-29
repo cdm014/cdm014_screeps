@@ -9,3 +9,4 @@ class ProcessTest {
     }
 
 }
+module.exports = ProcessTest
