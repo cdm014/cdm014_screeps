@@ -20,11 +20,16 @@ module.exports.loop = function () {
   let Bootstrap = new Process(0, 0,ProcessStatus.RUNNING, null, ProcessNames.BOOTSTRAP)
   ProcessTable.addProcess(Bootstrap);
   console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
-  let TestProcess = new Process(1,0,ProcessStatus.INITALIZING,null,ProcessNames.TEST)
+  let TestProcess = new Process(1,0,ProcessStatus.INITIALIZING,null,ProcessNames.TEST)
   ProcessTable.addProcess(TestProcess);
 
   var v_Empire = new  Empire();
   console.log("Next Process ID: "+ProcessTable.getNextId())
+  let criticals = ProcessTable.getProcessesByPriority(0);
+  criticals.forEach(element => {
+    element.log();
+    
+  });
   
  v_Empire.Init();
  v_Empire.Bootstrap();
