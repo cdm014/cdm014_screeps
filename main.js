@@ -13,19 +13,22 @@ var Empire = require('Empire');
 
 
 module.exports.loop = function () {
+  /**
+   * PERMANENT PROCESSES
+   * 0 - INIT: MEMORY CONFIG AND BASE JOB SCHEDULER
+   * 1 - BOOTSTRAP: STARTER CREEP
+   * 
+   */
   let spawn = Game.spawns['Spawn1'];
-  //spawn.SpawnBootstrapper("main loop");
-  var ProcessTable = new _ProcessTable()
-  //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
-  console.log ("ProcessStatus.RUNNING: "+ProcessStatus.RUNNING)
-  let Bootstrap = new Process(0, 0,ProcessStatus.RUNNING, null, ProcessNames.BOOTSTRAP)
-  ProcessTable.addProcess(Bootstrap);
-  console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
-  let TestProcess = new Process(1,0,ProcessStatus.INITIALIZING,null,ProcessNames.TEST)
+  
+  var ProcessTable = new _ProcessTable();
   let runner = new ProcessRunner();
-  runner.Run(TestProcess);
-  ProcessTable.addProcess(TestProcess);
-
+  //SET UP OUR MAIN PROCESSES
+  let INIT = new Process(0,0,ProcessStatus.RUNNING, null, ProcessNames.INIT)
+  let BOOTSTRAP = new Process(1, 0,ProcessStatus.RUNNING, null, ProcessNames.BOOTSTRAP)
+  ProcessTable.addProcess(INIT);
+  ProcessTable.addProcess(BOOTSTRAP); 
+/*
   var v_Empire = new  Empire();
   console.log("Next Process ID: "+ProcessTable.getNextId())
   let criticals = ProcessTable.getProcessesByPriority(0);
@@ -37,14 +40,27 @@ module.exports.loop = function () {
   
  v_Empire.Init();
  v_Empire.Bootstrap();
+ */
+
+ // SCAN ROOMS FOR HEALTH. WILL LATER MAKE THIS IT'S OWN PROCESS
  for (var roomName in Game.rooms) {
    let room = Game.rooms[roomName];
    room.ScanRoomHealth();
-  
-   //console.log(roomName+" - "+STRUCTURE_SPAWN+" : "+room.BuildingScoreByType(STRUCTURE_SPAWN));
+  //console.log(roomName+" - "+STRUCTURE_SPAWN+" : "+room.BuildingScoreByType(STRUCTURE_SPAWN));
+ }
+
+ //loop through priorities running processes
+ for (let i = 0; i <= 5; i++) {
+  let processes = ProcessTable.getProcessesByPriority(i);
+  processes.forEach(element => {
+    runner.Run(element);
+  });
 
  }
 
+
+
+ // RUN BOOTSTRAP CREEPS, WILL LATER START MOVING THIS INTO THE BOOTSTRAP THREAD
  for (var cname in Game.creeps) {
    let creep = Game.creeps[cname];
    console.log("Creep Name: "+cname);
