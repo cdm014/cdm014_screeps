@@ -57,11 +57,15 @@ class ProcessTable {
     addProcess(v_Process) {
         if (v_Process.Id == undefined  || 
             v_Process.processName == undefined) {
+            console.log("not adding process because undefined");
             return null;
         }
         //if the process id doesn't already exist or this process is the same 
         if(!this.checkIdExists(v_Process.Id) || (this.checkIdExists(v_Process.Id) && v_Process.processName == this.getProcess(v_Process.Id).processName) ) {
+            console.log("Adding Process id: "+v_Process.Id+" "+v_Process.processName)
             this.processes[v_Process.id] = v_Process;
+        } else {
+            console.log("Not adding process id: "+v_Process.Id+" ".v_Process.processName+" because of existing process");
         }
     }
     getProcess(v_ID) {
