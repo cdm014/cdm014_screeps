@@ -35,7 +35,7 @@ class ProcessTable {
         ///</Summary>
         console.log("Checking id: "+v_id);
         console.log("processes: "+_.keys(this.processes));
-        if (this.getProcess(v_id) == null || this.getProcess(v_id).status == ProcessStatus.KILLED) {
+        if(this.processes[v_id]== undefined || this.processes[v_id].status == ProcessStatus.KILLED) {
             return false;
         } else {
             return true;
