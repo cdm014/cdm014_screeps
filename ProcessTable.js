@@ -94,7 +94,7 @@ class ProcessTable {
            this.fixPriorities();
        }
       
-       processes = _.takeWhile(AllProcesses,{priority: priorityLevel});
+       processes = _.takeWhile(AllProcesses,{priority: priorityLevel, status: ProcessStatus.RUNNING});
        return processes;
 
     }
