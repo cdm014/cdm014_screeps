@@ -72,6 +72,7 @@ class ProcessTable {
         //if the process id doesn't already exist or this process is the same 
         if(!this.checkIdExists(v_Process.Id) || (this.checkIdExists(v_Process.Id) && v_Process.processName == this.getProcess(v_Process.Id).processName) ) {
             console.log("Adding Process id: "+v_Process.Id+" "+v_Process.processName)
+            console.log("Process Status"+v_Process.status);
             this.processes[v_Process.Id] = v_Process;
         } else {
             console.log("Not adding process id: "+v_Process.Id+" ".v_Process.processName+" because of existing process");
