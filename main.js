@@ -18,6 +18,7 @@ module.exports.loop = function () {
   //ALWAYS MAKE SURE WE HAVE THE BOOTSTRAP PROCESS AT PRIORITY 0
   let Bootstrap = new Process(0, 0,ProcessStatus.RUNNING, null, ProcessNames.BOOTSTRAP)
   ProcessTable.addProcess(Bootstrap);
+  console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
   let TestProcess = new Process(1,0,ProcessStatus.INITALIZING,null,ProcessNames.TEST)
   ProcessTable.addProcess(TestProcess);
 
