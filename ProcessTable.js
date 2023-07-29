@@ -35,21 +35,10 @@ class ProcessTable {
         ///</Summary>
         console.log("Checking id: "+v_id);
         console.log("processes: "+_.keys(this.processes));
-        let keys = _.keys(this.processes);
-        console.log("found: "+_.includes(_.keys(this.processes),0));
-        if (_.contains(_.keys(this.processes),v_id)) {
-            console.log("ID exists in table");
-            //check if the process has been killed
-            if (this.getProcess(v_id).status == ProcessStatus.KILLED) {
-                console.log("ID IS KILLED")
-                return false;
-            } else {
-                console.log("ID is not killed");
-                return true;
-            }
-        } else {
-            console.log ("ID is not in table");
+        if (this.getProcess(v_id) == null || this.getProcess(v_id).status == ProcessStatus.KILLED) {
             return false;
+        } else {
+            return true;
         }
         
     }
