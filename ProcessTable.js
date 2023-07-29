@@ -33,14 +33,19 @@ class ProcessTable {
         ///checks if an id is in the table returns true if it's in the table and doesn't
         ///have a status of ProcessStatus.KILLED
         ///</Summary>
+        console.log("Checking id "+v_id);
         if (_.contains(_.keys(this.processes),v_id)) {
+            console.log("ID exists in table");
             //check if the process has been killed
             if (this.getProcess(v_id).status == ProcessStatus.KILLED) {
+                console.log("ID IS KILLED")
                 return false;
             } else {
+                console.log("ID is not killed");
                 return true;
             }
         } else {
+            console.log ("ID is not in table");
             return false;
         }
         
