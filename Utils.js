@@ -287,7 +287,7 @@ Room.prototype.ScanRoomHealth = function () {
         if (DepositList[score] == undefined) {
           DepositList[score] = [];
         }
-        console.log ("Scoring object id: "+structure.id)
+        console.log ("Scoring object id: "+structure.id +" score: "+score)
         DepositList[score].push(structure.id);
       }
 
