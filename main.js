@@ -23,7 +23,7 @@ module.exports.loop = function () {
   console.log("Does process 0 exist: "+ProcessTable.checkIdExists(0))
   let TestProcess = new Process(1,0,ProcessStatus.INITIALIZING,null,ProcessNames.TEST)
   let runner = new ProcessRunner();
-  runner.Run(TestPRocess);
+  runner.Run(TestProcess);
   ProcessTable.addProcess(TestProcess);
 
   var v_Empire = new  Empire();
