@@ -35,11 +35,21 @@ class ProcessTable {
         ///</Summary>
         console.log("Checking id: "+v_id);
         console.log("processes: "+_.keys(this.processes));
-        if(this.processes[v_id]== undefined || this.processes[v_id].status == ProcessStatus.KILLED) {
+        if (this.processes[v_id] == undefined) {
+            console.log("processes did not have "+v_id);
             return false;
-        } else {
-            return true;
         }
+        if (this.processes[v_id] != undefined) {
+            console.log("found process id");
+            if (this.processes[v_id].status == ProcessStatus.KILLED) {
+                console.log( "previous process is dead");
+                return false;
+            } else {
+                console.log ("previous process not dead");
+                return true;
+            }
+        }
+
         
     }
 
