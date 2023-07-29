@@ -12,8 +12,8 @@ class ProcessEntry {
        this.name = "ProcessEntry";
        this.Id = pID;
        this.priority = pri;
-       this.status = stat,
-       this.parentId = parentId
+       this.status = stat;
+       this.parentId = parentId;
        this.processName = pName;
 
     }
