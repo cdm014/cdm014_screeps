@@ -1,5 +1,5 @@
 let Process = require('ProcessEntry');
-let ProcessName = require('ProcessName');
+let ProcessName = require('ProcessNames');
 let ProcessStatus = require('ProcessStatus');
 
 class ProcessRunner {
