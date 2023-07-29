@@ -7,6 +7,7 @@ class ProcessRunner {
         this.Name = "ProcessRunner"
     }
     Run(vProcess) {
+        console.log("ProcessRunner called for pId: "+vProcess.Id+" name: "+vProcess.processName);
         let runner = require(vProcess.processName)
         let p = new runner();
         p.Run(vProcess.Id);
