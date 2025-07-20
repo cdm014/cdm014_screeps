@@ -1,5 +1,4 @@
 let Tasks = require("creep-tasks");
-const { __esModule } = require("./Traveler");
 
 let Bootstrapper = function(creep) {
     // Don't bother doing anything if it's still spawning
