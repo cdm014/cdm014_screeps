@@ -59,29 +59,64 @@ class IPCBus {
 
 class Processes {
 
-    constructor(Memory) {
-        this.Memory = Memory;
-        this.IPCBus = new IPCBus(Memory);
-        if (!Memory.Processes) {
-            Memory.Processes = {};
+    constructor(Context) {
+        this.Context = Context;
+        if (!this.Context.Memory[Processes]) {
+            this.Context.Memory[Processes] = [];
         }
-        if (!Memory.ProcessMemory) {
-            Memory.ProcessMemory = {};
+        if (!this.Context.Memory[ProcessMemory]) {
+            this.Context.Memory[ProcessMemory] = {};
         }
+
     }
 
     newEntry(name, module, priority = 0) {
         return new ProcessEntry(name, module, priority);
     }
 
-    addProcess(ProcessEntry, ProcessMemory = {}) {
-        if (!this.Memory.Processes[ProcessEntry.name]) {
-            this.Memory.Processes[ProcessEntry.name] = new Process(ProcessEntry.name);
-            this.Memory.ProcessMemory[ProcessEntry.name] = ProcessMemory;
+    addProcess(entry, mem = {}) {
+        if(! _.includes(this.memory.Processes, entry)) {
+            this.Context.Memory.Processes.push(entry);
+            this.Context.Memory.ProcessMemory[entry.name] = mem;
+            return true;
         } else {
-            console.error(`Process ${ProcessEntry.name} already exists.`);
+            console.log("Process: "+entry.name+" already exists");
+            return false;
         }
     }
+    
+    runProcess(entry) {
+        //load the memory
+        let mem = this.Context.Memory.ProcessMemory(entry.name)
+        let pname = "process"+entry.module;
+        let process = require(pname);
+        return process.run(this.Context, mem);
+    }
+
+    
+    
+ 
+
+
+
+    registerQueue(name) {
+        this.IPCBus.RegisterQueue(name);
+    }
+
+    // Add a message to a queue
+    Write(QueueName, message) {
+        return this.IPCBus.Write(QueueName, message);
+    }
+
+    // pop the first message from a queue and return it
+    Read(QueueName) {
+        return this.IPCBus.Read(QueueName);
+    }
+
+    
+
+
+    
 
 
     getIPCBus() {

@@ -1,9 +1,12 @@
-var Tasks = require('creep-tasks')
-var Processes = require('Processes')
+var Tasks = require('creep-tasks');
+var Context = require('Context');
+var Processes = require('Processes');
 module.exports.loop = function () {
     console.log('Tick started: ' + Game.time);
-    // setup bot base
-    var Processes = new Processes(Memory);  
+    //set up bot base
+    let _Context = new Context (Game, Memory, PathFinder);
+    let _Processes = new Processes(_Context);
+    
 
 
 
