@@ -67,7 +67,7 @@ class Processes {
         if (!this.Context.Memory.ProcessMemory) {
             this.Context.Memory.ProcessMemory = {};
         }
-
+        this.IPCBus = new IPCBus(this.Context.Memory);
     }
 
     newEntry(name, module, priority = 0) {
@@ -90,7 +90,7 @@ class Processes {
         let mem = this.Context.Memory.ProcessMemory(entry.name)
         let pname = "process"+entry.module;
         let process = require(pname);
-        return process.run(this.Context, mem);
+        return process.run(this.Context, entry, mem);
     }
 
     
