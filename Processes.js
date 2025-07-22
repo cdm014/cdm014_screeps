@@ -61,11 +61,11 @@ class Processes {
 
     constructor(Context) {
         this.Context = Context;
-        if (!this.Context.Memory[Processes]) {
-            this.Context.Memory[Processes] = [];
+        if (!this.Context.Memory.Processes) {
+            this.Context.Memory.Processes = [];
         }
-        if (!this.Context.Memory[ProcessMemory]) {
-            this.Context.Memory[ProcessMemory] = {};
+        if (!this.Context.Memory.ProcessMemory) {
+            this.Context.Memory.ProcessMemory = {};
         }
 
     }
